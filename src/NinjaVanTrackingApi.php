@@ -51,7 +51,7 @@ class NinjaVanTrackingApi
                     $location = "In Transit";
                 }
 
-                $process = $event['type'] ?? '';
+                $process = self::parseEvent($event['type'] ?? '');
 
                 $trackres['data'][$i+1] = [
                     'date_time' => $event['time']  ?? '',
@@ -72,5 +72,35 @@ class NinjaVanTrackingApi
         }
 
         return $trackres;
+    }
+
+    private static function parseEvent($event)
+    {
+        $events = [
+            'added_to_shipment' => 'Departed Ninja Van warehouse',
+            'arrived_at_destination_hub' => 'Parcel is being processed at Ninja Van warehouse',
+            'arrived_at_origin_hub' => 'Parcel is being processed at Ninja Van warehouse',
+            'arrived_at_transit_hub' => 'Parcel is being processed at Ninja Van warehouse',
+            'cancel' => 'Parcel delivery has been cancelled',
+            'create_order' => 'Order created',
+            'delivery_failure' => 'Delivery is unsuccessful',
+            'delivery_success' => 'Successfully delivered',
+            'driver_inbound_scan' => 'Parcel is being delivered',
+            'driver_pickup_scan' => 'Successfully picked up from sender',
+            'first_hub_inbound_scan' => 'Parcel is being processed at Ninja Van origin warehouse',
+            'forced_success' => 'Successfully delivered',
+            'from_dp_to_customer' => 'Parcel successfully collected',
+            'from_dp_to_driver' => 'Departed Parcel Dropoff Counter / Box',
+            'from_driver_to_dp' => 'Parcel delivered to Parcel Collection Counter / Box',
+            'from_shipper_to_dp' => 'Parcel dropped off at Parcel Dropoff Counter / Box',
+            'hub_inbound_scan' => 'Parcel is being processed at Ninja Van warehouse',
+            'parcel_routing_scan' => 'Parcel is being processed at Ninja Van warehouse',
+            'reschedule' => 'Parcel delivery has been rescheduled',
+            'resume' => 'Parcel delivery resumed',
+            'route_inbound_scan' => 'Parcel is being processed at Ninja Van warehouse',
+            'rts' => 'Parcel is being returned to sender'
+        ];
+
+        return $events[strtolower($event)] ?? $event;
     }
 }

@@ -6,7 +6,7 @@
   - This API will fetch data directly from the NinjaVan Tracking website, so if there are any problem with the site, this API will also affected.
 
 # Installation
-```composer require afzafri/ninjavan-tracking-api:dev-master```
+```composer require afzafri/ninjavan-tracking-api```
 
 # Usage
 - ```http://site.com/api.php?trackingNo=CODE```
